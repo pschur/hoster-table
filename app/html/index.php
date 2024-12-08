@@ -145,7 +145,7 @@ $servers = $db->table('servers')->get();
                     <tr>
                         <th>Plan</th>
                         <?php foreach ($servers as $item) {
-                            echo "<th>".$item['name']."</th>";
+                            echo "<th>".$item->name."</th>";
                         } ?>
                     </tr>
                 </thead>
