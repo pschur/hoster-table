@@ -8,7 +8,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hosting.entrypoints=websecure"
-      - "traefik.http.routers.hosting.rule=Host(`hoster.${DOMAIN}.de`)"
+      - "traefik.http.routers.hosting.rule=Host(`hoster.${DOMAIN}`)"
       - "traefik.http.routers.hosting.middlewares=default@file"
       - "traefik.http.routers.hosting.tls=true"
       - "traefik.http.routers.hosting.tls.certresolver=netcup"
