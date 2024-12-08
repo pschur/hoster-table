@@ -34,8 +34,6 @@ services:
       - "traefik.http.routers.hosting-admin.service=hosting-admin"
       - "traefik.http.services.hosting-admin.loadbalancer.server.port=8080"
       - "traefik.docker.network=proxy"
-    ports:
-      - 3001:8080
     networks:
       - proxy
       - default
