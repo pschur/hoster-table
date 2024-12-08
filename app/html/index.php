@@ -77,7 +77,7 @@ $servers = $db->table('servers')->get();
             </ul>
             <ul>
                 <li>Hi, <?= $_SESSION['user']->name ?? 'John Doe' ?></li>
-                <li><a href="/admin.php">Admin</a></li>
+                <li><a href="/connect-adm.php">Admin</a></li>
                 <li><a href="/logout.php">Logout</a></li>
             </ul>
         </nav>
