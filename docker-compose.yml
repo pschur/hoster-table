@@ -1,0 +1,58 @@
+services:
+  web:
+    #image: php:apache
+    build: .
+    env_file: ./.env
+    ports:
+      - 3000:80
+    volumes:
+      - ./app:/var/www
+      - ./.env:/var/www/.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hosting.entrypoints=websecure"
+      - "traefik.http.routers.hosting.rule=Host(`hoster.paul-plus.de`)"
+      - "traefik.http.routers.hosting.middlewares=default@file"
+      - "traefik.http.routers.hosting.tls=true"
+      - "traefik.http.routers.hosting.tls.certresolver=netcup"
+      - "traefik.http.routers.hosting.service=hosting"
+      - "traefik.http.services.hosting.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
+    networks:
+#      - proxy
+      - default
+
+  adminer:
+    image: adminer
+    environment:
+      ADMINER_PLUGINS: 'tables-filter tinymce'
+      ADMINER_DEFAULT_SERVER: 'db'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hosting-admin.entrypoints=websecure"
+      - "traefik.http.routers.hosting-admin.rule=Host(`hoster.paul-plus.de`) && PathPrefix(`/admin`)"
+      - "traefik.http.routers.hosting-admin.middlewares=default@file"
+      - "traefik.http.routers.hosting-admin.tls=true"
+      - "traefik.http.routers.hosting-admin.tls.certresolver=netcup"
+      - "traefik.http.routers.hosting-admin.service=hosting-admin"
+      - "traefik.http.services.hosting-admin.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"
+    ports:
+      - 3001:8080
+    networks:
+#      - proxy
+      - default
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root-${DB_PASSWORD}
+    volumes:
+      - ./database:/var/lib/mysql
+
+#networks:
+#  proxy:
+#    external: true
