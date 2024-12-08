@@ -3,3 +3,5 @@ database
 
 .env
 app/.env
+
+docker-compose.override.yml
