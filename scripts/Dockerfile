@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-install mysqli pdo_mysql
 
 RUN apt update
-RUN apt install git curl -y
+RUN apt install git curl unzip zip -y
 
 WORKDIR /home/config
 
